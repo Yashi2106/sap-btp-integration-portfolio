@@ -1,1 +1,99 @@
+## What I Built
 
+### 1. Backend iFlow (Certificate Expiry Detection)
+- Timer triggers daily at 8 AM
+- Reads certificate data from backend system (employee-wise)
+- Compares expiry dates with current date
+- Categorizes certificates into: Active, Expiring Soon (30/15/7 days), Expired
+
+### 2. Email Alert System
+- Sends automated emails to employees 30, 15, and 7 days before expiry
+- HR team receives weekly summary of all expiring certificates
+- Uses SMTP (Gmail, port 587) with Groovy scripting
+
+### 3. SAP Fiori Dashboard (Frontend)
+Built a basic SAP Fiori UI with multiple screens:
+
+## Fiori Dashboard Features
+
+### Page 1: Certification Management Dashboard
+
+| Feature | What It Shows |
+|:---|:---|
+| **Total Certifications** | 50 total certificates in system |
+| **Completed** | 30 certificates completed successfully |
+| **Expiring Soon** | 12 certificates expiring in next 30 days |
+| **Expired** | 8 certificates already expired |
+| **Department Compliance** | Integration, Management, Cloud, Development, SAP |
+| **Expiry Trend Chart** | Monthly breakdown of certificates expiring (Jan-Dec) |
+| **Quick Actions** | Employee Data view, Send Alerts button |
+
+### Page 2: Employee Data Table
+
+| Column | Description |
+|:---|:---|
+| Name | Employee full name |
+| Email | Wipro email address |
+| Team | Development, SAP, Integration, Cloud |
+| Competency | Frontend, SAP Fiori, SAP CPI, OpenShift, SAP PI/PO |
+| Location | Pune, Hyderabad, Noida |
+| Role | UI Developer, SAP UI5 Developer, Software Engineer, etc. |
+
+**Filters Available:** All Teams, All Locations, Search bar
+
+### Page 3: Employee Certificate Details (Example: Ram Kumar)
+
+| Section | Details |
+|:---|:---|
+| **Completed** | SAP CPI Integration (Expired: 2026-03-01) |
+| **Expired** | SAP ABAP (Expired: 2025-05-01) |
+| **Pending** | SAP BTP Extension (70% progress) |
+| **Expiring Soon** | Fiori/UI5 (Expiry: 2026-06-15) |
+
+## Technical Details
+
+### iFlow Components Used
+
+| Component | Purpose |
+|:---|:---|
+| Timer (JMS) | Triggers daily at 8 AM for expiry check |
+| Content Modifier | Processes certificate data from backend |
+| Groovy Script | Date calculations and email logic |
+| SMTP Adapter | Sends email alerts to employees and HR |
+| OData Service | Connects Fiori frontend to backend data |
+
+### Email Alert Logic
+- **30 days before expiry:** First reminder
+- **15 days before expiry:** Second reminder  
+- **7 days before expiry:** Final reminder
+- **After expiry:** Alert to HR and employee
+
+## Testing
+- ✅ Timer triggers iFlow correctly at scheduled time
+- ✅ Email alerts sent at 30/15/7 day thresholds
+- ✅ Fiori dashboard displays real-time data from backend
+- ✅ Search and filter working on Employee Data table
+- ✅ Employee certificate details page shows correct status
+
+## What I Learned
+- Timer-based iFlow scheduling for daily jobs
+- Date calculations in Groovy for expiry detection
+- Conditional email logic based on days remaining
+- SAP Fiori UI basics (tiles, tables, filters, charts)
+- Connecting Fiori frontend to backend OData services
+- Multi-page Fiori application structure
+
+## Related Skills
+- SAP CPI (iFlow with Timer + Content Modifier)
+- Groovy Scripting (date calculations, email logic)
+- SMTP adapter configuration
+- SAP Fiori (Dashboard, Table, Details views)
+- OData services
+
+## Future Enhancements
+- Push notifications to Microsoft Teams/Slack for expired certificates
+- Export certificate report as Excel/PDF from Fiori dashboard
+- Auto-renewal workflow integration
+- Add certificate upload functionality for employees
+
+## Repository Structure
