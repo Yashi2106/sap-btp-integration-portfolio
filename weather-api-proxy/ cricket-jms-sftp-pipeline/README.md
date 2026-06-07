@@ -1,1 +1,49 @@
+# Cricket Data Processor - JMS → HTTP → SFTP Pipeline
 
+## Project Overview
+Built a two-iFlow pipeline that processes cricket match data. First iFlow queues HTTP requests into JMS, second iFlow consumes from JMS, calls 3 RapidAPI cricket endpoints in sequence, merges responses, and stores final output to SFTP.
+
+## Architecture
+
+### iFlow 1 (Producer)- Receives HTTP payload
+- Queues message into JMS queue for asynchronous processing
+
+### iFlow 2 (Consumer)
+
+## Technical Details
+
+### Components Used
+| Component | Purpose |
+|:---|:---|
+| JMS Queue | Decouples request receipt from processing |
+| Content Modifier | Adds dynamic headers for API authentication |
+| RapidAPI (3 endpoints) | teams/list → get-results → get-players |
+| Groovy Script | Email alert on failure |
+| SFTP Adapter | Stores final merged payload |
+
+### API Chain Flow
+1. **First API Call** - teams/list (using teamId)
+2. **Second API Call** - get-results (using teamId + matchId)
+3. **Third API Call** - get-players (filters player list from match)
+
+### Error Handling
+- Exception subprocess added to main iFlow
+- On any failure: Groovy script triggers email via SMTP (Gmail, port 587)
+- Email contains error details and failed step information
+
+## Testing
+- End-to-end tested: HTTP request → JMS → 3 API calls → SFTP file creation
+- Failure scenario: Invalid teamId triggers email alert
+- Verified file written to SFTP with merged payload from API 2 and API 3
+
+## What I Learned
+- Asynchronous processing using JMS queues
+- API chaining where subsequent calls depend on previous responses
+- Groovy scripting for custom error notifications
+- SFTP adapter configuration for file output
+
+## Related Skills
+- JMS (Sender/Receiver patterns)
+- Content Modifier for dynamic headers
+- Exception Subprocess + Groovy
+- SFTP adapter with file creation
